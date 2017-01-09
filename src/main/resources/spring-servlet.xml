@@ -1,0 +1,53 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+
+
+	<context:component-scan base-package="com.xxx.ssm.**" />
+
+	<!-- json begin -->
+	<mvc:annotation-driven />
+	<!--<bean name="swaggerConfig" class="com.xxx.ssm.common.util.SwaggerConfig" />-->
+
+	<bean
+			class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="mappingJackson2HttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+	<bean id="mappingJackson2HttpMessageConverter"
+		  class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/html;charset=UTF-8</value>
+				<value>text/json;charset=UTF-8</value>
+				<value>application/json;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+	<!-- json end -->
+	<bean
+			class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />  <!-- 通过注解，把一个url映射到Controller类上 -->
+	<bean
+			class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />	<!-- 通过注解，把一个url映射到一个Controller的方法上 -->
+	<bean
+			class="org.springframework.web.servlet.view.InternalResourceViewResolver"> <!-- 对转向页面的路径解析。prefix：前缀， suffix：后缀 -->
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<mvc:resources mapping="/resource/**/" location="/resource/"/>
+
+	<!-- Enables swgger ui-->
+	<mvc:resources mapping="*.html" location="/"/>
+	<mvc:resources mapping="/**" location="/"/>
+</beans>

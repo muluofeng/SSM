@@ -1,0 +1,210 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxx.ssm.common.dao.base.BaseAccountInfoDAO">
+  <resultMap id="BaseResultMap" type="com.xxx.ssm.common.entities.AccountInfo">
+    <id column="account_id" jdbcType="INTEGER" property="accountId" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="addr" jdbcType="VARCHAR" property="addr" />
+    <result column="sex" jdbcType="CHAR" property="sex" />
+    <result column="regtime" jdbcType="INTEGER" property="regtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    account_id, email, addr, sex, regtime
+  </sql>
+  <select id="selectByExample" parameterType="com.xxx.ssm.common.entities.example.AccountInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from account_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from account_info
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from account_info
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xxx.ssm.common.entities.example.AccountInfoExample">
+    delete from account_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert"  parameterType="com.xxx.ssm.common.entities.AccountInfo">
+    insert into account_info (account_id, email, addr, 
+      sex, regtime)
+    values (#{accountId,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=CHAR}, #{regtime,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true"   keyProperty="accountId" parameterType="com.xxx.ssm.common.entities.AccountInfo">
+    insert into account_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="accountId != null">
+        account_id,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="addr != null">
+        addr,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="regtime != null">
+        regtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="accountId != null">
+        #{accountId,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=CHAR},
+      </if>
+      <if test="regtime != null">
+        #{regtime,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xxx.ssm.common.entities.example.AccountInfoExample" resultType="java.lang.Integer">
+    select count(*) from account_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update account_info
+    <set>
+      <if test="record.accountId != null">
+        account_id = #{record.accountId,jdbcType=INTEGER},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addr != null">
+        addr = #{record.addr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=CHAR},
+      </if>
+      <if test="record.regtime != null">
+        regtime = #{record.regtime,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update account_info
+    set account_id = #{record.accountId,jdbcType=INTEGER},
+      email = #{record.email,jdbcType=VARCHAR},
+      addr = #{record.addr,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=CHAR},
+      regtime = #{record.regtime,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xxx.ssm.common.entities.AccountInfo">
+    update account_info
+    <set>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=CHAR},
+      </if>
+      <if test="regtime != null">
+        regtime = #{regtime,jdbcType=INTEGER},
+      </if>
+    </set>
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xxx.ssm.common.entities.AccountInfo">
+    update account_info
+    set email = #{email,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=CHAR},
+      regtime = #{regtime,jdbcType=INTEGER}
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </update>
+</mapper>

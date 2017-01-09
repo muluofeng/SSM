@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!--指定 MyBatis 所用日志的具体实现，未指定时将自动查找。-->
+        <setting name="logImpl" value="LOG4J2" />
+    </settings>
+    <!--为Java类型设定一个短的名字-->
+    <typeAliases>
+        <!--<typeAlias alias="TVTopoSubNet" type="com.quantum.ems.tv.eo.TVTopoSubNet" />-->
+    </typeAliases>
+    <!--MyBatis 允许你在已映射语句执行过程中的某一点进行拦截调用。-->
+    <!--<plugins>-->
+        <!--<plugin interceptor="util.SelfPageHelper">-->
+            <!--<property name="offsetAsPageNum" value="false"/>-->
+            <!--<property name="rowBoundsWithCount" value="true"/>-->
+            <!--<property name="pageSizeZero" value="false"/>-->
+            <!--<property name="reasonable" value="true"/>-->
+        <!--</plugin>-->
+    <!--</plugins>-->
+    <!--映射的mapper文件-->
+    <mappers>
+        <mapper resource="com/xxx/ssm/common/mapper/CategoryMapper.xml" />
+
+
+        <mapper resource="com/xxx/ssm/common/mapper/base/BasePamAccountMapper.xml" />
+        <mapper resource="com/xxx/ssm/common/mapper/base/BaseAccountInfoMapper.xml" />
+        <mapper resource="com/xxx/ssm/common/mapper/AccountMapper.xml" />
+
+    </mappers>
+</configuration>

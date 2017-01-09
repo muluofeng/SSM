@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="OFF">
+    <properties>
+        <property name="LOG_HOME">logs</property>
+        <!-- 日志备份目录 -->
+        <property name="BACKUP_HOME">${LOG_HOME}/backup</property>
+    </properties>
+    <appenders>
+        <!--日志的控制台输出-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <!--文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用-->
+        <File name="log" fileName="D:/JavaWorkspace/SSM/logs/ssm.log" append="false">  <!--不写绝对路径会在tomcat的bin下生成-->
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"/>
+        </File>
+    </appenders>
+    <loggers>
+        <!--
+        level 日志的等级： trace debug error等等
+        additivity=true，如果同时符合当前logger和root，那么会打印2遍
+        -->
+        <logger name="com.xxx.ssm.common.*" level="trace" additivity="false">
+            <appender-ref ref="Console"/><!--表示使用上面的name=console的形式输出-->
+        </logger>
+        <root level="trace">
+            <appender-ref ref="log"/>
+            <appender-ref ref="Console"/>
+        </root>
+    </loggers>
+</configuration>

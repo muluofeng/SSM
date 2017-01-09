@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--此bean告诉Spring去哪找数据库的配置信息,因为有此Bean才出现下面用${}标记来取变量的语句 -->
+    <bean id="propertyConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>classpath:jdbc.properties</value>
+        </property>
+    </bean>
+
+    <!-- 定义 dbcp 数据库 连接池 -->
+    <bean id="dbcpDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName">
+            <value>${jdbc.driver}</value>
+        </property>
+        <property name="url">
+            <value>${jdbc.url}</value>
+        </property>
+        <property name="username">
+            <value>${jdbc.username}</value>
+        </property>
+        <property name="password">
+            <value>${jdbc.password}</value>
+        </property>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.xxx.ssm.common.dao" />
+        <property name="sqlSessionFactoryBeanName" value="tv_sqlSessionFactory" />
+    </bean>
+
+    <bean id="tv_sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation">
+            <value>classpath:mybatis-config-common.xml</value>
+        </property>
+        <property name="dataSource" ref="dbcpDataSource" />
+    </bean>
+
+    <!--&lt;!&ndash; spring和MyBatis完美整合，不需要mybatis的配置映射文件 &ndash;&gt;-->
+    <!--<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">-->
+        <!--<property name="dataSource" ref="dbcpDataSource" />-->
+        <!--&lt;!&ndash; 自动扫描mapping.xml文件，**表示迭代查找 &ndash;&gt;-->
+        <!--<property name="mapperLocations" value="classpath:mapper/**/*.xml" />-->
+    <!--</bean>-->
+
+</beans>
